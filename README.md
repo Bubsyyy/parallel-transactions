@@ -1,4 +1,3 @@
-Bank Application
 A console-based banking system built with Java that processes transactions concurrently. The system supports deposit and withdrawal transactions, with handling for multiple transactions at the same time.
 
 Features
