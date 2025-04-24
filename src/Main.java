@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        // Initialize Bank and Clients
+
         Bank bank = new Bank();
         List<Client> clients = new ArrayList<>();
 
@@ -22,7 +22,39 @@ public class Main {
         Thread closeBankTimerThread = new Thread(closeBankTask);
         closeBankTimerThread.start();
 
-        // Initialize 50 clients with random names and initial balances
+        initializeClients(clients);
+
+        addTransactionsToBank(clients, bank);
+
+    }
+
+    private static void addTransactionsToBank(List<Client> clients, Bank bank) {
+        try {
+            for (int i = 1; i <= 100; i++) {
+                Random random = new Random();
+                Client client = clients.get(random.nextInt(clients.size())); // Random client
+                double amount = 50 + random.nextDouble(50000); // Random transaction amount
+                boolean isDeposit = random.nextBoolean(); // Random transaction type
+
+
+                Transaction transaction;
+                if (isDeposit) {
+                    transaction = new DepositTransaction(client, amount);
+                } else {
+                    transaction = new WithdrawTransaction(client, amount);
+                }
+
+
+                bank.addTransaction(transaction);
+                Thread.sleep(500); // 500ms delay between transactions
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
+    }
+
+    private static void initializeClients(List<Client> clients) {
         for (int i = 1; i <= 50; i++) {
 
             if (i % 3 == 0){
@@ -40,32 +72,6 @@ public class Main {
             }
 
 
-        }
-
-        // Add 100 random transactions with 500ms delay
-        try {
-            for (int i = 0; i < 100; i++) {
-                Random random = new Random();
-                Client client = clients.get(random.nextInt(clients.size())); // Random client
-                double amount = 50 + random.nextDouble(50000); // Random transaction amount
-                boolean isDeposit = random.nextBoolean(); // Random transaction type
-
-                // Create a transaction (deposit or withdraw)
-                Transaction transaction;
-                if (isDeposit) {
-                    transaction = new DepositTransaction(client, amount);
-                } else {
-                    transaction = new WithdrawTransaction(client, amount);
-                }
-
-
-                bank.addTransaction(transaction);
-                System.out.println("Added transaction " + transaction);
-                Thread.sleep(500); // 500ms delay between transactions
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            e.printStackTrace();
         }
     }
 
