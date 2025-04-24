@@ -39,4 +39,9 @@ public abstract class BaseTransaction implements Transaction {
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public String toString() {
+        return String.format("type: %s amount: %f timestamp: %s", type, amount, timestamp);
+    }
 }

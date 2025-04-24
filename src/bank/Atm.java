@@ -25,17 +25,20 @@ public class Atm extends Thread {
         Transaction transaction;
 
         while ((transaction = bank.nextTransaction()) != null) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
 
             try {
                 transaction.perform();
             } catch (TransactionLimitException | InsufficientFundsException e) {
                 System.out.println(e.getMessage());
             }
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
