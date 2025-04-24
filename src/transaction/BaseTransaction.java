@@ -1,14 +1,15 @@
 package transaction;
 
 import client.Client;
-import exception.InsufficientFundsException;
-import exception.TransactionLimitException;
+
+import java.time.LocalDateTime;
 
 public abstract class BaseTransaction implements Transaction {
 
     private final Client client;
     private final String type;
     private final double amount;
+    private final LocalDateTime timestamp;
 
 
 
@@ -16,6 +17,7 @@ public abstract class BaseTransaction implements Transaction {
         this.client = client;
         this.type = type;
         this.amount = amount;
+        this.timestamp = LocalDateTime.now();
     }
 
     @Override
@@ -31,5 +33,10 @@ public abstract class BaseTransaction implements Transaction {
     @Override
     public double getAmount() {
         return amount;
+    }
+
+    @Override
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 }

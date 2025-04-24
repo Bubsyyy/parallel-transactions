@@ -7,7 +7,7 @@ public abstract class BaseClient implements Client {
 
     private static int idCounter = 1;
     private final int id;
-    private volatile double balance;
+    private double balance;
     private final int priority;
     private final double transactionLimit;
 

@@ -17,10 +17,8 @@ public class TransactionComparator implements Comparator<Transaction> {
             return priorityComparison;
         }
 
-        // Tie-breaker: compare by client ID (lower ID first)
-        return Integer.compare(
-                o1.getInitializer().getId(),
-                o2.getInitializer().getId()
-        );
+
+        return o1.getTimestamp().compareTo(o2.getTimestamp());
+
     }
 }

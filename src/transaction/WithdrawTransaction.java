@@ -9,7 +9,7 @@ public class WithdrawTransaction extends BaseTransaction {
 
     private static final String TYPE = "withdraw";
 
-    protected WithdrawTransaction(Client client, double amount) {
+    public WithdrawTransaction(Client client, double amount) {
         super(client, TYPE, amount);
     }
 

@@ -7,7 +7,7 @@ public class DepositTransaction extends BaseTransaction {
 
     private static final String TYPE = "deposit";
 
-    protected DepositTransaction(Client client, double amount) {
+    public DepositTransaction(Client client, double amount) {
         super(client, TYPE, amount);
     }
 
