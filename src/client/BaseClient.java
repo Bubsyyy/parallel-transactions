@@ -44,14 +44,11 @@ public abstract class BaseClient implements Client {
     @Override
     public void withdraw(double amount) throws InsufficientFundsException, TransactionLimitException {
 
-        if(amount > this.transactionLimit) {
-            throw new TransactionLimitException(String.format("Client N:%d is trying to make transaction over the limit", this.id));
-        }
-
+        checkLimit(amount);
 
 
         synchronized (this) {
-            if (getBalance() < amount) {
+            if (balance < amount) {
                 throw new InsufficientFundsException(String.format("Client N:%d does not have enough funds to withdraw", this.id));
             }
             this.balance -= amount;
@@ -64,9 +61,7 @@ public abstract class BaseClient implements Client {
     @Override
     public synchronized void deposit(double amount) throws TransactionLimitException {
 
-        if(amount > this.transactionLimit) {
-            throw new TransactionLimitException(String.format("Client N:%d is trying to make transaction over the limit", this.id));
-        }
+        checkLimit(amount);
 
         synchronized (this) {
             this.balance += amount;
@@ -74,6 +69,12 @@ public abstract class BaseClient implements Client {
         }
 
 
+    }
+
+    private void checkLimit(double amount) throws TransactionLimitException {
+        if(amount > this.transactionLimit) {
+            throw new TransactionLimitException(String.format("Client N:%d is trying to make transaction over the limit", this.id));
+        }
     }
 
 
