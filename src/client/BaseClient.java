@@ -52,22 +52,24 @@ public abstract class BaseClient implements Client {
                 throw new InsufficientFundsException(String.format("Client N:%d does not have enough funds to withdraw", this.id));
             }
             this.balance -= amount;
-            System.out.println("Withdraw " + amount + " to " + this.id);
+
         }
 
+        System.out.println("Withdraw " + amount + " to " + this.id);
 
     }
 
     @Override
-    public synchronized void deposit(double amount) throws TransactionLimitException {
+    public void deposit(double amount) throws TransactionLimitException {
 
         checkLimit(amount);
 
         synchronized (this) {
             this.balance += amount;
-            System.out.println("Deposited " + amount + " to " + this.id);
+
         }
 
+        System.out.println("Deposited " + amount + " to " + this.id);
 
     }
 
